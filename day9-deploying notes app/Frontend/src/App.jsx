@@ -4,6 +4,7 @@ import axios from "axios";
 function App() {
   const [notes, setNotes] = useState([]);
   const [editNoteId, setEditNoteId] = useState(null);
+  const [editDescription, setEditDescription] = useState("");
 
   function fetchNotes() {
     axios.get("http://localhost:3000/api/notes").then((res) => {
@@ -30,6 +31,19 @@ function App() {
       });
   }
 
+  function handleUpdate(noteId) {
+    axios
+      .patch(("http://localhost:3000/api/notes/"+noteId), {
+        description: editDescription,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setEditDescription("");
+        setEditNoteId(null);
+        fetchNotes();
+      });
+  }
+
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -43,8 +57,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-zinc-700 text-zinc-100 p-6">
-
-            <h1 className="text-4xl font-bold mb-6 text-center">NOTES</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">NOTES</h1>
       <form
         onSubmit={handleSubmit}
         className="max-w-md mx-auto mb-8 bg-zinc-800 p-4 rounded-lg shadow-md"
@@ -74,8 +87,6 @@ function App() {
         </button>
       </form>
 
-
-
       <div className="notes flex flex-wrap gap-4 justify-center">
         {notes.map((note, index) => (
           <div
@@ -83,24 +94,47 @@ function App() {
             className="note bg-zinc-800 p-4 rounded-lg w-64 shadow-md hover:shadow-xl transition"
           >
             <h1 className="text-lg font-semibold mb-2">{note.title}</h1>
-            <p className="text-zinc-300 text-sm">{note.description}</p>
+
+            {/* <p className="text-zinc-300 text-sm">{note.description}</p> */}
+            {editNoteId === note._id ? (
+              <textarea
+                name="description"
+                placeholder="Description"
+                onChange={(e) => setEditDescription(e.target.value)}
+                value={editDescription}
+                className="w-full mb-3 p-2 rounded bg-zinc-700 text-white outline-none"
+                required
+              ></textarea>
+            ) : (
+              <p className="text-zinc-300 text-sm">{note.description}</p>
+            )}
+
             <button
               onClick={() => handleDelete(note._id)}
               className="border-white text-sm border-2 p-1 mt-5 rounded-md bg-white text-black"
             >
               Delete
             </button>
+
             <button
               onClick={() => {
                 setEditNoteId(note._id);
+                setEditDescription(note.description);
                 console.log(editNoteId);
-              }
-
-              }
+              }}
               className="border-white text-sm border-2 p-1 mt-5 ml-4 rounded-md bg-white text-black"
             >
               Edit
             </button>
+
+            {editNoteId === note._id && (
+              <button
+                className="border-white text-sm border-2 p-1 mt-5 ml-4 rounded-md bg-white text-black"
+                onClick={() => handleUpdate(note._id)}
+              >
+                Update
+              </button>
+            )}
           </div>
         ))}
       </div>

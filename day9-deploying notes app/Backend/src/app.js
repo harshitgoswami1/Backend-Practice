@@ -2,17 +2,15 @@ const express = require("express");
 const noteModel = require("./models/notes.model")
 const cors = require("cors");
 const path = require("path");
+
+
+
 const app = express();
-
-
-
 app.use(cors())
 app.use(express.json());
+app.use(express.static("./public"))
 
 
-app.get("/",(req,res) => {
-    res.send("this is our about page");
-})
 
 app.post("/api/notes", async (req, res) => {
     const { title, description } = req.body
@@ -74,7 +72,7 @@ app.patch('/api/notes/:id', async (req, res) => {
   
 
 
-console.log(__dirname)
+// console.log(__dirname)
 
 app.use('*name', (req, res) => {
     res.sendFile(path.join(__dirname, "..", "/public/index.html"))
