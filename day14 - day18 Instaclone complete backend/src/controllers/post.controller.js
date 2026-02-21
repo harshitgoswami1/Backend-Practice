@@ -1,7 +1,7 @@
 const postModel = require("../models/post.model")
 const jwt = require("jsonwebtoken")
-const imageKit = require("@imagekit/nodejs")
-const { toFile } = require("@imagekit/nodejs")
+const imageKit = require("@imagekit/nodejs/index.js")
+const { toFile } = require("@imagekit/nodejs/index.js")
 
 
 const imagekit = new imageKit({
