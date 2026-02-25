@@ -1,0 +1,32 @@
+import React from 'react'
+import "../style/form.scss"
+import "../../shared/global.scss"
+import { Link } from 'react-router'
+
+const Login = () => {
+
+    const handleSubmit = (e) => {
+        e,preventDefault();
+    }
+
+  return (
+
+    <main>
+        <div className="form-container">
+            <h1>Register</h1>
+            <form action="" onSubmit={handleSubmit}>
+                <input type="email" name='email' id='email' placeholder='enter email' />
+                <input type="text" name='username' id='username' placeholder='enter username' />
+                <input type="password" name='password' id='password' placeholder='enter password'  />
+                <button className='button primary-button' >Register</button>
+            </form>
+            <p>Already have an account? <Link to={"/login"}>Login here</Link></p>
+            
+
+             
+        </div>
+    </main>
+  )
+}
+
+export default Login

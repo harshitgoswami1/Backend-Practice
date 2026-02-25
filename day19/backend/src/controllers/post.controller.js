@@ -72,9 +72,34 @@ async function getPostDetailsController(req, res) {
 
 }
 
+async function likePostController(req,res) {  
+}
+
+
+async function getFeedController(req, res) {
+    try {
+        const posts = await postModel
+            .find()
+            .populate("user")
+
+        res.status(200).json({
+            message: "Posts fetched successfully",
+            posts
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Failed to fetch posts",
+            error: error.message
+        });
+    }
+}
 
 module.exports = {
     createPostController,
     getPostController,
-    getPostDetailsController
+    getPostDetailsController,
+    getFeedController
 }

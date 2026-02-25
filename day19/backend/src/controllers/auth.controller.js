@@ -53,6 +53,7 @@ async function registerController(req, res) {
 
 async function loginController(req, res) {
     try {
+        // console.log(req.body)
         const { username, password } = req.body;
 
         if (!username || !password) {
@@ -61,7 +62,7 @@ async function loginController(req, res) {
             });
         }
 
-        const user = await userModel.findOne({ username });
+        const user = await userModel.findOne({ username }).select("+password");
 
         if (!user) {
             return res.status(400).json({

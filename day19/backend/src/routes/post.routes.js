@@ -26,5 +26,15 @@ postRouter.get("/",identifyUser, postController.getPostController)
  */
 postRouter.get("/details/:postId",identifyUser, postController.getPostDetailsController)
 
+/**
+ * GET  api/posts/feed
+ * @description get all the posts to show in field
+ */
+postRouter.get("/feed",identifyUser, postController.getFeedController)
+
+
+
+
+
 
 module.exports = postRouter

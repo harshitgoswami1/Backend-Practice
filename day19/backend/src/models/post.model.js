@@ -10,7 +10,7 @@ const postSchema = mongoose.Schema({
         required:[ true, "Image url is required for creating a post"]
     },
     user : {
-        ref : "users",
+        ref : "User",
         type : mongoose.Schema.Types.ObjectId,
         required : [ true, "User id is required for creating a post"]
     }
